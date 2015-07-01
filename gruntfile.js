@@ -10,6 +10,7 @@
 module.exports = function (grunt) {
     // load all npm grunt tasks
     require('load-grunt-tasks')(grunt);
+
     // Project configuration.
     grunt.initConfig({
         jscs: {
@@ -25,19 +26,18 @@ module.exports = function (grunt) {
                 '<%= nodeunit.tests %>'
             ],
             options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
+                jshintrc: '.jshintrc'
             }
         },
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp']
+            tests: ['tmp/']
         },
         // Configuration to be run (and then tested).
         minifyPolymer: {
             options: {
             },
-            html_and_css: {
+            test: {
                 files: [
                     {
                         expand: true,
