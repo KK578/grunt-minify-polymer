@@ -27,6 +27,7 @@ exports.minifyCss = function (css) {
     return minCss;
 };
 
+// TODO: Add options integration
 // All credits to https://github.com/mishoo/UglifyJS2 for this function.
 exports.minifyJs = function (js) {
     var topLevelAst = uglify.parse(js);

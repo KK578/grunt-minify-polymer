@@ -2,29 +2,6 @@ var Minimize = require('minimize');
 var chalk = require('chalk');
 var util = require('./lib/util.js');
 
-// Plugin to minimise CSS inline.
-function minifyCss(node, next) {
-    if (node.type === 'style') {
-        // Breaking out Regex because Polymer is too fancy for clean-css or something simple...
-        var css = node.children[0].data;
-        var minCss = util.minifyCss(css);
-        node.children[0].data = minCss;
-    }
-
-    next();
-}
-
-// Plugin to minimise JS inline.
-function uglifyJs(node, next) {
-    if (node.type === 'script') {
-        var js = node.children[0].data;
-        var minJs = util.minifyJs(js);
-        node.children[0].data = minJs;
-    }
-
-    next();
-}
-
 // TODO: Add a 'minifyPolymerCss' task
 module.exports = function (grunt) {
     grunt.registerMultiTask('minifyPolymer',
@@ -36,8 +13,44 @@ module.exports = function (grunt) {
             spare: true,
             quotes: true,
             plugins: [
-                { id: 'css', element: minifyCss },
-                { id: 'js', element: uglifyJs }
+                {
+                    id: 'css',
+                    element: function (node, next) {
+                        if (node.type === 'style') {
+                            try {
+                                if (node.children.length > 0) {
+                                    var css = node.children[0].data;
+                                    var minCss = util.minifyCss(css);
+                                    node.children[0].data = minCss;
+                                }
+                            }
+                            catch (err) {
+                                grunt.log.warn('Error while minifying CSS: ' + err);
+                            }
+                        }
+
+                        next();
+                    }
+                },
+                {
+                    id: 'js',
+                    element: function (node, next) {
+                        if (node.type === 'script') {
+                            try {
+                                if (node.children.length > 0) {
+                                    var js = node.children[0].data;
+                                    var minJs = util.minifyJs(js);
+                                    node.children[0].data = minJs;
+                                }
+                            }
+                            catch (err) {
+                                grunt.log.warn('Error while minifying JS: ' + err);
+                            }
+                        }
+
+                        next();
+                    }
+                }
             ]
         });
         var filesToMinify = this.files.length;
@@ -57,9 +70,11 @@ module.exports = function (grunt) {
                     return true;
                 }
             });
+            var data = grunt.file.read(src);
 
+            // TODO: Make test with empty html file.
             // Warn on empty files.
-            if (src.length === 0) {
+            if (data.length === 0) {
                 grunt.log.warn('Destination ' + chalk.cyan(file.dest) +
                     ' not written because src files were empty.');
                 filesToMinify--;
@@ -67,10 +82,9 @@ module.exports = function (grunt) {
                 return;
             }
 
-            var data = grunt.file.read(src);
             minimize.parse(data, function (err, min) {
                 if (err) {
-                    grunt.log.warn(err);
+                    grunt.log.warn('Failed to minify ' + chalk.cyan(src) + ': ' + err);
                     filesToMinify--;
 
                     return;
@@ -91,5 +105,10 @@ module.exports = function (grunt) {
                 }
             });
         });
+
+        // TODO: With empty html file, test this is run?
+        if (filesToMinify === 0) {
+            grunt.log.warn('No files created.');
+        }
     });
 };
