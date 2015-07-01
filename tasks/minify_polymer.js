@@ -15,7 +15,6 @@ function minifyCss(node, next) {
 }
 
 // Plugin to minimise JS inline.
-// All credits to https://github.com/mishoo/UglifyJS2 for this function.
 function uglifyJs(node, next) {
     if (node.type === 'script') {
         var js = node.children[0].data;
