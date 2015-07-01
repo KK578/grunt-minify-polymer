@@ -1,0 +1,45 @@
+# Visual Studio #
+#################
+*.njsproj
+*.sln
+*.suo
+.ntvs_analysis.dat
+obj/
+dist/
+
+# Node modules/npm #
+####################
+node_modules/
+
+# Logs #
+########
+*.log
+logs/
+
+# Caches #
+##########
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

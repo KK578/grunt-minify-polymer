@@ -1,0 +1,58 @@
+{
+    "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+    "requireCurlyBraces": [ "if", "else", "for", "while", "do", "try", "catch" ],
+    "disallowEmptyBlocks": true,
+    "requireFunctionDeclarations": true,
+    "requireKeywordsOnNewLine": [ "else", "while", "do", "try", "catch", "finally", "case", "default" ],
+    "requireLineBreakAfterVariableAssignment": true,
+    "requireLineFeedAtFileEnd": true,
+    "disallowMixedSpacesAndTabs": true,
+    "disallowMultipleLineBreaks": true,
+    "disallowMultipleSpaces": true,
+    "disallowMultipleVarDecl": true,
+    "disallowNewlineBeforeBlockStatements": true,
+    "requireOperatorBeforeLineBreak": [ "?", "=", "+", "-", "/", "*", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ],
+    "requirePaddingNewlinesBeforeKeywords": [ "do", "for", "if", "switch", "case", "try", "void", "while", "with", "return", "typeof", "function" ],
+    "disallowPaddingNewlinesInBlocks": true,
+    "requireSemicolons": true,
+    "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==" ],
+    "disallowSpaceAfterObjectKeys": true,
+    "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==" ],
+    "requireSpaceBeforeBlockStatements": true,
+    "requireSpaceBeforeObjectValues": true,
+    "disallowSpaceBeforePostfixUnaryOperators": true,
+    "requireSpaceBetweenArguments": true,
+    "requireSpacesInAnonymousFunctionExpression": {
+        "beforeOpeningRoundBrace": true,
+        "beforeOpeningCurlyBrace": true
+    },
+    "disallowSpacesInCallExpression": true,
+    "requireSpacesInConditionalExpression": true,
+    "requireSpacesInForStatement": true,
+    "disallowSpacesInFunctionDeclaration": {
+        "beforeOpeningRoundBrace": true
+    },
+    "disallowSpacesInsideArrayBrackets": "all",
+    "requireSpacesInsideObjectBrackets": {
+        "allExcept": [ "}" ]
+    },
+    "disallowSpacesInsideParentheses": true,
+    "disallowTrailingComma": true,
+    "disallowTrailingWhitespace": true,
+    "validateAlignedFunctionParameters": {
+        "lineBreakAfterOpeningBraces": true,
+        "lineBreakBeforeClosingBraces": true
+    },
+    "validateIndentation": 4,
+    "validateLineBreaks": "CRLF",
+    "validateNewlineAfterArrayElements": {
+        "maximum": 3
+    },
+    "validateParameterSeparator": ", ",
+    "validateQuoteMarks": "'",
+    "maximumLineLength": {
+        "value": 100,
+        "allowUrlComments": true,
+        "allowRegex": true
+    }
+}
