@@ -1,64 +1,32 @@
 var Minimize = require('minimize');
 var chalk = require('chalk');
+var util = require('./lib/util.js');
 
-// TODO: Move function to a util.js to allow reuse for a minifyPolymerCss task
 // Plugin to minimise CSS inline.
 function minifyCss(node, next) {
     if (node.type === 'style') {
         // Breaking out Regex because Polymer is too fancy for clean-css or something simple...
         var css = node.children[0].data;
-
-        // Remove /* ... */ Comments
-        var minCss = css.replace(/\/\*([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*\/+/gm, '');
-        // Remove whitespace at start and end of each line.
-        minCss = minCss.replace(/\s*(\r\n|\n)\s*/gm, '');
-        // Remove spaces before and after any of the following characters:
-        //  :,>{}()
-        // Use loads of silly regex as lookahead/lookbehind isn't supported. :/
-        minCss = minCss.replace(/\s*\:\s*/gm, ':');
-        // Resolve ::content selectors requiring a space.
-        minCss = minCss.replace(/::/gm, ' ::');
-        minCss = minCss.replace(/\s*\,\s*/gm, ',');
-        minCss = minCss.replace(/\s*\>\s*/gm, '>');
-        minCss = minCss.replace(/\s*\{\s*/gm, '{');
-        minCss = minCss.replace(/\s*\}\s*/gm, '}');
-        // minCss = minCss.replace(/\s*\(\s*/gm, '(');
-        // minCss = minCss.replace(/\s*\)\s*/gm, ')');
-        // Replace any remaining occurances of multiple spaces with a single space.
-        minCss = minCss.replace(/  +/gm, ' ');
-
+        var minCss = util.minifyCss(css);
         node.children[0].data = minCss;
     }
 
     next();
 }
 
-// TODO: Move function to a util.js
 // Plugin to minimise JS inline.
 // All credits to https://github.com/mishoo/UglifyJS2 for this function.
 function uglifyJs(node, next) {
     if (node.type === 'script') {
         var js = node.children[0].data;
-        var uglify = require('uglify-js');
-
-        var topLevelAst = uglify.parse(js);
-        topLevelAst.figure_out_scope();
-
-        var compressor = uglify.Compressor();
-        var compressedAst = topLevelAst.transform(compressor);
-        compressedAst.figure_out_scope();
-        compressedAst.compute_char_frequency();
-        compressedAst.mangle_names();
-
-        var stream = uglify.OutputStream();
-        compressedAst.print(stream);
-
-        node.children[0].data = stream.toString();
+        var minJs = util.minifyJs(js);
+        node.children[0].data = minJs;
     }
 
     next();
 }
 
+// TODO: Add a 'minifyPolymerCss' task
 module.exports = function (grunt) {
     grunt.registerMultiTask('minifyPolymer',
         'Minify Polymer HTML with inline CSS and JS',
