@@ -3,10 +3,17 @@ Grunt plugin for minifying Polymer Elements. This plugin has been created to com
 
 This plugin is made to solve two issues:
 
-1. Resolving issues with ':root' and '@apply' CSS rules found in Polymer. In css-clean:
+1. Resolving issues with ':root' and '@apply' CSS rules found in Polymer.
+
+   In css-clean:
    * ':root' minifies incorrectly, missing a closing brace.
    * '@apply' compiles incorrectly, either being ignored or being prepended with an invalid ':'.
-2. Minifying inline CSS and JS in HTML.
+
+   In general, CSS Parsers currently fail on these rules, producing errors whilst attempting to minify. Thus this plugin uses simple regex with the aim of simply removing comments and whitespace present in the CSS.
+2. Minifying inline CSS and JS in element HTML.
+
+   Polymer Elements contain their documentation inline the element HTML, JS and CSS. Vulcanize may not fully remove the documentation comments, and will not minify automatically.
+   This plugin aims to bridge the step from source code to vulcanized production code by producing an intermediary step with minified source code for vulcanize.
 
 ## Getting Started
 This plugin requires Grunt.
@@ -128,7 +135,7 @@ Use with [grunt-vulcanize](https://github.com/Polymer/grunt-vulcanize) to minify
       default: {
         files: {
           // Where index.html includes bower_components imports
-          'build.html': 'index.html'
+          'build/build.html': 'build/index.html'
         }
       }
     }
@@ -140,9 +147,6 @@ Use with [grunt-vulcanize](https://github.com/Polymer/grunt-vulcanize) to minify
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-*(Nothing yet)*
-
 ## License
 Copyright (c) 2015 Kevin Kwan. Licensed under the MIT license.
 
@@ -153,4 +157,4 @@ CSS Minification: Some Regex strings...
 
 JS Minification: [UglifyJS](https://github.com/mishoo/UglifyJS2)
 
-Test Source Files: [PolymerElements](https://github.com/PolymerElements)
+Test Source Files: [PolymerElements](https://github.com/PolymerElements), [Bootstrap](http://getbootstrap.com/)

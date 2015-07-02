@@ -49,6 +49,7 @@ exports.minifyPolymer = {
     },
     html_css: function (test) {
         var files = [
+            'bootstrap-partial.html',
             'color.html',
             'default-theme.html',
             'demo-pages.html',
