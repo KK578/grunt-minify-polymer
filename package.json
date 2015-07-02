@@ -14,7 +14,11 @@
     "tasks"
   ],
   "keywords": [
-    "gruntplugin"
+    "polymer",
+    "minify",
+    "inline",
+    "gruntplugin",
+    "grunt"
   ],
   "main": "Gruntfile.js",
   "scripts": {
