@@ -36,6 +36,9 @@ module.exports = function (grunt) {
         // Configuration to be run (and then tested).
         minifyPolymer: {
             options: {
+                js: {
+                    mangle: false
+                }
             },
             test: {
                 files: [

@@ -29,15 +29,18 @@ exports.minifyCss = function (css) {
 
 // TODO: Add options integration
 // All credits to https://github.com/mishoo/UglifyJS2 for this function.
-exports.minifyJs = function (js) {
+exports.minifyJs = function (js, options) {
     var topLevelAst = uglify.parse(js);
     topLevelAst.figure_out_scope();
 
     var compressor = uglify.Compressor();
     var compressedAst = topLevelAst.transform(compressor);
-    compressedAst.figure_out_scope();
-    compressedAst.compute_char_frequency();
-    compressedAst.mangle_names();
+
+    if (options.mangle) {
+        compressedAst.figure_out_scope();
+        compressedAst.compute_char_frequency();
+        compressedAst.mangle_names();
+    }
 
     var stream = uglify.OutputStream();
     compressedAst.print(stream);

@@ -27,7 +27,10 @@ exports.minifyPolymer = {
         // setup here if necessary
         done();
     },
-    // TODO: Possibly edit to not test script tags are equal.
+    // TODO: Add test case for blank file.
+    // TODO: Make tests for more general CSS.
+    //////////////////////////////////////////
+    // Note: JS is not mangled for testing to prevent differences from expected files.
     html_css_js: function (test) {
         var files = [
             'paper-header-panel.html',
@@ -44,7 +47,6 @@ exports.minifyPolymer = {
 
         test.done();
     },
-    // TODO: Make more tests to test general CSS.
     html_css: function (test) {
         var files = [
             'color.html',

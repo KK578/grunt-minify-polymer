@@ -12,6 +12,9 @@ module.exports = function (grunt) {
             empty: true,
             spare: true,
             quotes: true,
+            js: {
+                mangle: true
+            },
             plugins: [
                 {
                     id: 'css',
@@ -39,7 +42,7 @@ module.exports = function (grunt) {
                             try {
                                 if (node.children.length > 0) {
                                     var js = node.children[0].data;
-                                    var minJs = util.minifyJs(js);
+                                    var minJs = util.minifyJs(js, options.js);
                                     node.children[0].data = minJs;
                                 }
                             }

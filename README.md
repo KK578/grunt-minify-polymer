@@ -41,7 +41,20 @@ grunt.initConfig({
 ```
 
 ### Options
-See minimize [options](https://github.com/Moveo/minimize#options).
+See minimize [options](https://github.com/Moveo/minimize#options) for options to pass for HTML Minification.
+
+#### options.js
+
+Type: `Object`
+
+Object passed to UglifyJS when minifying inline JS.
+
+##### options.js.mangle
+
+Type: `Boolean`
+Default value: `true`
+
+Allow UglifyJS to mangle function and local variable names.
 
 ### Usage Examples
 #### Static File Bindings
