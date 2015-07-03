@@ -8,9 +8,6 @@
 
 'use strict';
 module.exports = function (grunt) {
-    // load all npm grunt tasks
-    require('load-grunt-tasks')(grunt);
-
     var time = require('time-grunt');
     time(grunt);
 
