@@ -7,7 +7,7 @@
             {
                 expand: true,
                 cwd: 'test/fixtures/',
-                src: ['**/*.html'],
+                src: ['**/*.html', '!only_css/**/*'],
                 dest: 'tmp/'
             }
         ]

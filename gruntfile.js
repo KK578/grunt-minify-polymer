@@ -16,7 +16,8 @@ module.exports = function (grunt) {
 
     var jit = require('jit-grunt');
     jit(grunt, {
-        minifyPolymer: 'tasks/minify_polymer.js'
+        minifyPolymer: 'tasks/minify_polymer.js',
+        minifyPolymerCSS: 'tasks/minify_polymer_css.js'
     });
 
     var config = require('load-grunt-config');

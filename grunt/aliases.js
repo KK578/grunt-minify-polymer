@@ -12,6 +12,7 @@
         tasks: [
             'clean',
             'minifyPolymer',
+            'minifyPolymerCSS',
             'nodeunit'
         ]
     }

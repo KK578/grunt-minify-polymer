@@ -38,5 +38,8 @@ exports.minifyPolymer = {
     // Note: JS is not mangled for testing to prevent differences from expected files.
     html_css_js: function (test) {
         util.testDirectory(test, 'inline_css_js', test.done);
+    },
+    css: function (test) {
+        util.testDirectory(test, 'only_css', test.done);
     }
 };

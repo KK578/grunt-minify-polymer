@@ -1,6 +1,7 @@
 ﻿var uglify = require('uglify-js');
 
 exports.minifyCss = function (css) {
+    // TODO: Resolve /**********/
     // Remove /* ... */ Comments
     var minCss = css.replace(/\/\*([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*\/+/gm, '');
     // Remove whitespace and line feeds at start and end of each line.
@@ -27,7 +28,6 @@ exports.minifyCss = function (css) {
     return minCss;
 };
 
-// TODO: Add options integration
 // All credits to https://github.com/mishoo/UglifyJS2 for this function.
 exports.minifyJs = function (js, options) {
     var topLevelAst = uglify.parse(js);

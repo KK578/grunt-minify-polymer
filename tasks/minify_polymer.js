@@ -2,7 +2,6 @@ var Minimize = require('minimize');
 var chalk = require('chalk');
 var util = require('./lib/util.js');
 
-// TODO: Add a 'minifyPolymerCss' task
 module.exports = function (grunt) {
     grunt.registerMultiTask('minifyPolymer',
         'Minify Polymer HTML with inline CSS and JS',
