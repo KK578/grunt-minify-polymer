@@ -1,23 +1,40 @@
 ﻿var uglify = require('uglify-js');
 
 exports.minifyCss = function (css) {
-    // TODO: Resolve /**********/
-    // Remove /* ... */ Comments
-    var minCss = css.replace(/\/\*([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*\/+/gm, '');
-    // Remove whitespace and line feeds at start and end of each line.
-    minCss = minCss.replace(/\s*(\r\n|\n)\s*/gm, '');
+    /**
+     * Remove line feeds and directly surrounding whitespace.
+     *  1) Whitespace or Tab
+     *  2) Line Feed
+     *  3) Whitespace or Tab
+     **/
+    var minCss = css.replace(/[ \t]*[\r\n]+[ \t]*/gm, '');
 
-    // Remove spaces before and after any of the following characters: :,>{}
-    // Use loads of silly regex as lookahead/lookbehind isn't supported. :/
-    minCss = minCss.replace(/\s*\:\s*/gm, ':');
-    minCss = minCss.replace(/\s*\,\s*/gm, ',');
-    minCss = minCss.replace(/\s*\>\s*/gm, '>');
-    minCss = minCss.replace(/\s*\{\s*/gm, '{');
-    minCss = minCss.replace(/\s*\}\s*/gm, '}');
-    // Do not remove spaces by parantheses as they may destroy structure
-    //  e.g. :host([mode="cover"]) #mainContainer
-    // minCss = minCss.replace(/\s*\(\s*/gm, '(');
-    // minCss = minCss.replace(/\s*\)\s*/gm, ')');
+    /**
+     * Remove comments.
+     * As all line feeds have been removed, including those within comments,
+     * no line feeds need to be handled here.
+     *  1) Match comment open
+     *  2) Match any character non-greedily
+     *     - Non-greedy ensures that the first comment close encountered will stop the string.
+     *  3) Match comment close
+     */
+    minCss = minCss.replace(/\/\*.*?\*\//g, '');
+
+    /**
+     * Remove 'styling' spaces after the following characters: :;,>{}
+     * Would be preferable to use lookahead/lookbehind to allow for matching all
+     *  characters without including in the matched string, but JS.
+     *
+     * Do not remove spaces by parantheses as they may destroy structure
+     *  e.g. :host([mode="cover"]) #mainContainer
+     *                            ^
+     */
+    minCss = minCss.replace(/\s*\:\s*/g, ':');
+    minCss = minCss.replace(/\s*\;\s*/g, ';');
+    minCss = minCss.replace(/\s*\,\s*/g, ',');
+    minCss = minCss.replace(/\s*\>\s*/g, '>');
+    minCss = minCss.replace(/\s*\{\s*/g, '{');
+    minCss = minCss.replace(/\s*\}\s*/g, '}');
 
     // Resolve ::content selectors requiring a space.
     minCss = minCss.replace(/::/gm, ' ::');
