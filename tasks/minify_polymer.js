@@ -12,13 +12,15 @@ module.exports = function (grunt) {
             empty: true,
             spare: true,
             quotes: true,
-            js: {
-                mangle: true
+            jsCompress: {
+                warnings: false
             },
+            jsMangle: true,
             plugins: [
                 {
                     id: 'css',
                     element: function (node, next) {
+                        // On <style> tags, run util.minifyCss on their inner data.
                         if (node.type === 'style') {
                             try {
                                 if (node.children.length > 0) {
@@ -38,11 +40,12 @@ module.exports = function (grunt) {
                 {
                     id: 'js',
                     element: function (node, next) {
+                        // On <script> tags, run util.minifyJs on their inner data.
                         if (node.type === 'script') {
                             try {
                                 if (node.children.length > 0) {
                                     var js = node.children[0].data;
-                                    var minJs = util.minifyJs(js, options.js);
+                                    var minJs = util.minifyJs(js, options);
                                     node.children[0].data = minJs;
                                 }
                             }
@@ -85,7 +88,10 @@ module.exports = function (grunt) {
                 return;
             }
 
+            // Minimize will minify HTML, with the plugins above handling
+            //  inline <style> and <script> tags.
             minimize.parse(data, function (err, min) {
+                // Handle files failing to be minified.
                 if (err) {
                     grunt.log.warn('Failed to minify ' + chalk.cyan(src) + ': ' + err);
                     filesToMinify--;
@@ -95,6 +101,9 @@ module.exports = function (grunt) {
 
                 grunt.file.write(file.dest, min);
 
+                // Increment file count.
+                // As the task is asynchronous, need to check if this is the last file
+                //  to process; if true, then log and complete grunt task.
                 if (++createdFiles === filesToMinify) {
                     if (createdFiles > 0) {
                         grunt.log.ok(createdFiles + ' ' +
@@ -110,8 +119,11 @@ module.exports = function (grunt) {
         });
 
         // TODO: With empty html file, test this is run?
+        // In the event of all files being non-existant or empty,
+        // foreach loop will have reduced filesToMinify to 0.
         if (filesToMinify === 0) {
             grunt.log.warn('No files created.');
+            done();
         }
     });
 };

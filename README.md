@@ -50,13 +50,14 @@ grunt.initConfig({
 ### Options
 See minimize [options](https://github.com/Moveo/minimize#options) for options to pass for HTML Minification.
 
-#### options.js
+#### options.jsCompress
 
 Type: `Object`
+Default Value : `{ warnings: false }`
 
-Object passed to UglifyJS when minifying inline JS.
+Object passed to UglifyJS when compressing inline JS.
 
-##### options.js.mangle
+#### options.jsMangle
 
 Type: `Boolean`
 Default value: `true`

@@ -1,8 +1,6 @@
 ﻿module.exports = {
     options: {
-        js: {
-            mangle: false
-        }
+        jsMangle: false
     },
     test: {
         files: [
