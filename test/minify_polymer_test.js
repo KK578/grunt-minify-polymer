@@ -1,6 +1,5 @@
 'use strict';
-
-var grunt = require('grunt');
+var util = require('./lib/util.js');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -30,40 +29,14 @@ exports.minifyPolymer = {
     // TODO: Add test case for blank file.
     // TODO: Make tests for more general CSS.
     //////////////////////////////////////////
-    // Note: JS is not mangled for testing to prevent differences from expected files.
-    html_css_js: function (test) {
-        var files = [
-            'paper-header-panel.html',
-            'paper-material.html'
-        ];
-        test.expect(files.length);
-
-        for (var i = 0; i < files.length; i++) {
-            var actual = grunt.file.read('tmp/' + files[i]);
-            var expected = grunt.file.read('test/expected/' + files[i]);
-            test.equal(actual, expected, 'should describe ' + files[i] +
-                ' minified. Results may be unreliable due to UglifyJS.');
-        }
-
-        test.done();
+    html: function (test) {
+        util.testDirectory(test, 'only_html', test.done);
     },
     html_css: function (test) {
-        var files = [
-            'bootstrap-partial.html',
-            'color.html',
-            'default-theme.html',
-            'demo-pages.html',
-            'paper-styles.html',
-            'shadow.html'
-        ];
-        test.expect(files.length);
-
-        for (var i = 0; i < files.length; i++) {
-            var actual = grunt.file.read('tmp/' + files[i]);
-            var expected = grunt.file.read('test/expected/' + files[i]);
-            test.equal(actual, expected, 'should describe ' + files[i] + ' minified.');
-        }
-
-        test.done();
+        util.testDirectory(test, 'inline_css', test.done);
+    },
+    // Note: JS is not mangled for testing to prevent differences from expected files.
+    html_css_js: function (test) {
+        util.testDirectory(test, 'inline_css_js', test.done);
     }
 };

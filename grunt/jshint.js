@@ -3,7 +3,7 @@
         'Gruntfile.js',
         'grunt/*.js',
         'tasks/**/*.js',
-        '<%= nodeunit.tests %>'
+        'test/**/*.js'
     ],
     options: {
         jshintrc: '.jshintrc'
