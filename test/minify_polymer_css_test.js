@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 var util = require('./lib/util.js');
 
 /*
@@ -21,7 +21,7 @@ var util = require('./lib/util.js');
     test.ifError(value)
 */
 
-exports.minifyPolymer = {
+exports.minifyPolymerCSS = {
     setUp: function (done) {
         // setup here if necessary
         done();
@@ -29,14 +29,7 @@ exports.minifyPolymer = {
     // TODO: Add test case for blank file.
     // TODO: Make tests for more general CSS.
     //////////////////////////////////////////
-    html: function (test) {
-        util.testDirectory(test, 'only_html', test.done);
-    },
-    html_css: function (test) {
-        util.testDirectory(test, 'inline_css', test.done);
-    },
-    // Note: JS is not mangled for testing to prevent differences from expected files.
-    html_css_js: function (test) {
-        util.testDirectory(test, 'inline_css_js', test.done);
+    css: function (test) {
+        util.testDirectory(test, 'only_css', test.done);
     }
 };

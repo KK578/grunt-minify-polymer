@@ -31,6 +31,8 @@ grunt.loadNpmTasks('grunt-minify-polymer');
 ```
 
 ## The "minifyPolymer" task
+Minifies HTML with any inline CSS and JS.
+
 ### Overview
 In your project's Gruntfile, add a section named `minifyPolymer` to the data object passed into `grunt.initConfig()`.
 
@@ -50,14 +52,13 @@ grunt.initConfig({
 ### Options
 See minimize [options](https://github.com/Moveo/minimize#options) for options to pass for HTML Minification.
 
-#### options.js
-
+#### options.jsCompress
 Type: `Object`
+Default Value : `{ warnings: false }`
 
-Object passed to UglifyJS when minifying inline JS.
+Object passed to UglifyJS when compressing inline JS.
 
-##### options.js.mangle
-
+#### options.jsMangle
 Type: `Boolean`
 Default value: `true`
 
@@ -114,34 +115,116 @@ grunt.initConfig({
 });
 ```
 
-#### Suggestions
+## The "minifyPolymerCSS" task
+Minifies CSS, works with Polymer CSS rules/selectors.
+
+### Overview
+In your project's Gruntfile, add a section named minifyPolymerCSS ot the data object passed into grunt.initConfig().
+
+```js
+grunt.initConfig({
+  minifyPolymerCSS: {
+    your_target: {
+      // Target-specific file lists go here.
+    }
+  }
+});
+```
+
+### Options
+No options currently available for this task.
+
+### Usage Examples
+#### Static File Bindings
+```js
+grunt.initConfig({
+  minifyPolymerCSS: {
+    default: {
+      files: {
+        'dest/my-element.css': 'src/my-element.css',
+        'dest/my-other-element.css': 'src/my-other-element.css'
+      }
+    }
+  }
+});
+```
+
+#### Dynamic File Bindings
+```js
+grunt.initConfig({
+  minifyPolymerCSS: {
+    default: {
+      files: [
+        {
+          expand: true,
+          cwd: 'src/stylesheets/',
+          src: ['**/*.css'],
+          dest: 'build/'
+        }
+      ]
+    }
+  }
+});
+```
+
+#### Minify Polymer-Elements CSS from Bower
+```js
+grunt.initConfig({
+  minifyPolymerCSS: {
+    default: {
+      files: [
+        {
+          expand: true,
+          cwd: 'bower_components/',
+          src: ['**/*.css'],
+          dest: 'build/bower_components/'
+        }
+      ]
+    }
+  }
+});
+```
+
+## Suggestions
 Use with [grunt-vulcanize](https://github.com/Polymer/grunt-vulcanize) to minify your Polymer App.
 
 ```js
-  grunt.initConfig({
-    minifyPolymer: {
-      default: {
-        files: [
-          {
-            expand: true,
-            cwd: 'bower_components/',
-            src: ['**/*.html'],
-            dest: 'build/bower_components/'
-          }
-        ]
-      }
-    },
-    vulcanize: {
-      default: {
-        files: {
-          // Where index.html includes bower_components imports
-          'build/build.html': 'build/index.html'
+grunt.initConfig({
+  minifyPolymer: {
+    default: {
+      files: [
+        {
+          expand: true,
+          cwd: 'bower_components/',
+          src: ['**/*.html'],
+          dest: 'build/bower_components/'
         }
+      ]
+    }
+  },
+  minifyPolymerCSS: {
+    default: {
+      files: [
+        {
+          expand: true,
+          cwd: 'bower_components/',
+          src: ['**/*.css'],
+          dest: 'build/bower_components/'
+        }
+      ]
+    }
+  },
+  vulcanize: {
+    default: {
+      files: {
+        // Where index.html includes bower_components imports
+        'build/build.html': 'build/index.html'
       }
     }
-  });
+  }
+});
 
-  grunt.registerTask('default', ['minifyPolymer', 'vulcanize']);
+grunt.registerTask('default', ['minifyPolymer', 'minifyPolymerCSS', 'vulcanize']);
 ```
 
 ## Contributing
