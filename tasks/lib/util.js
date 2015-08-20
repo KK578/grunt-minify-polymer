@@ -21,7 +21,7 @@ exports.minifyCss = function (css) {
     minCss = minCss.replace(/\/\*.*?\*\//g, '');
 
     /**
-     * Remove 'styling' spaces after the following characters: :;,>{}
+     * Remove 'styling' spaces after the following characters: ;,>{}
      * Would be preferable to use lookahead/lookbehind to allow for matching all
      *  characters without including in the matched string, but JS.
      *
@@ -29,15 +29,40 @@ exports.minifyCss = function (css) {
      *  e.g. :host([mode="cover"]) #mainContainer
      *                            ^
      */
-    minCss = minCss.replace(/\s*\:\s*/g, ':');
     minCss = minCss.replace(/\s*\;\s*/g, ';');
     minCss = minCss.replace(/\s*\,\s*/g, ',');
     minCss = minCss.replace(/\s*\>\s*/g, '>');
     minCss = minCss.replace(/\s*\{\s*/g, '{');
     minCss = minCss.replace(/\s*\}\s*/g, '}');
 
-    // Resolve ::content selectors requiring a space.
-    minCss = minCss.replace(/::/gm, ' ::');
+    /**
+     * /.*?\{([^{}]*?\{.*?\}|.*?);?\}/g is an absolute monstrosity of a Regex...
+     * .*?\{            -> Matches css selectors, allowing the regex to avoid
+     *                      manipulating the intended selection by the rule.
+     * [^{}]*?\{.*?\}   -> Matches css rules with nested items
+     *                      E.g. Keyframes, media
+     * .*?              -> Otherwise matches a standard single css rule set.
+     * ;?\}             -> Matches end brace, allows for a ; to appear first
+     *                      to correctly match :root selectors.
+     *
+     * Really should just make a special CSS parser at this point...
+     *
+     */
+    // For each : within a css selector, remove surrounding white space.
+    var selectors = minCss.match(/.*?\{([^{}]*?\{.*?\}|.*?);?\}/g);
+
+    for (var i = 0; i < selectors.length; i++) {
+        var rules = selectors[i].match(/\{([^{}]*?\{.*?\}|.*?);?\}/g);
+
+        for (var j = 0; j < rules.length; j++) {
+            rules[j] = rules[j].replace(/\s*\:\s*/g, ':');
+        }
+
+        rules = rules.join('');
+        selectors[i] = selectors[i].replace(/\{([^{}]*?\{.*?\}|.*?);?\}/, rules);
+    }
+
+    minCss = selectors.join('');
 
     // Replace any remaining occurances of multiple spaces with a single space.
     minCss = minCss.replace(/  +/gm, ' ');

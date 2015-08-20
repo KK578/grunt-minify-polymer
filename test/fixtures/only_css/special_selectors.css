@@ -1,0 +1,11 @@
+﻿div ::content h1 {
+    font-size: 32px;
+}
+
+div::after {
+    background-color: #FFFFFF;
+}
+
+div :first-child {
+    background-color: #000000;
+}
