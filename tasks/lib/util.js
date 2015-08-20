@@ -37,7 +37,7 @@ exports.minifyCss = function (css) {
     minCss = minCss.replace(/\s*\}\s*/g, '}');
 
     // Resolve ::content selectors requiring a space.
-    minCss = minCss.replace(/::/gm, ' ::');
+    minCss = minCss.replace(/::content/gm, ' ::content');
 
     // Replace any remaining occurances of multiple spaces with a single space.
     minCss = minCss.replace(/  +/gm, ' ');
