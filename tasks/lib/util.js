@@ -49,7 +49,7 @@ exports.minifyCss = function (css) {
      *
      */
     // For each : within a css selector, remove surrounding white space.
-    var selectors = minCss.match(/.*?\{([^{}]*?\{.*?\}|.*?);?\}/g);
+    var selectors = minCss.match(/.*?\{([^{}]*?\{.*?\}|.*?);?\}/g) || [];
 
     for (var i = 0; i < selectors.length; i++) {
         var rules = selectors[i].match(/\{([^{}]*?\{.*?\}|.*?);?\}/g);
