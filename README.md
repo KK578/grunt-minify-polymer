@@ -1,4 +1,7 @@
 # grunt-minify-polymer
+
+[![Build Status](https://travis-ci.org/KK578/grunt-minify-polymer.svg?branch=master)](https://travis-ci.org/KK578/grunt-minify-polymer)
+
 Grunt plugin for minifying Polymer Elements. This plugin has been created to combine functionalities of [grunt-minify-html](https://github.com/sindresorhus/grunt-minify-html), [gulp-minify-inline](https://github.com/shkuznetsov/gulp-minify-inline) and [vulcanize#0.7.11](https://github.com/Polymer/vulcanize) for Polymer v1.0 Elements.
 
 This plugin is made to solve two issues:
@@ -229,6 +232,8 @@ grunt.registerTask('default', ['minifyPolymer', 'minifyPolymerCSS', 'vulcanize']
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+Pull Requests will be built, using the test suite, on [Travis-CI](https://travis-ci.org/KK578/grunt-minify-polymer).
 
 ## License
 Copyright (c) 2015 Kevin Kwan. Licensed under the MIT license.
