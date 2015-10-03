@@ -26,7 +26,6 @@ exports.minifyPolymer = {
         // setup here if necessary
         done();
     },
-    // TODO: Add test case for blank file.
     // TODO: Make tests for more general CSS.
     //////////////////////////////////////////
     html: function (test) {
