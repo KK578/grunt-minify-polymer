@@ -44,7 +44,6 @@
         "lineBreakBeforeClosingBraces": true
     },
     "validateIndentation": 4,
-    "validateLineBreaks": "CRLF",
     "validateNewlineAfterArrayElements": {
         "maximum": 3
     },
