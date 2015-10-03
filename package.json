@@ -1,6 +1,6 @@
 {
   "name": "grunt-minify-polymer",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Grunt plugin for minifying Polymer Elements.",
   "repository": {
     "type": "git",
