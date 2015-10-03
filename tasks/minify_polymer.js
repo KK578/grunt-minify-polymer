@@ -77,7 +77,6 @@ module.exports = function (grunt) {
             });
             var data = grunt.file.read(src);
 
-            // TODO: Make test with empty html file.
             // Warn on empty files.
             if (data.length === 0) {
                 grunt.log.warn('Destination ' + chalk.cyan(file.dest) +
@@ -117,7 +116,6 @@ module.exports = function (grunt) {
             });
         });
 
-        // TODO: With empty html file, test this is run?
         // In the event of all files being non-existant or empty,
         // foreach loop will have reduced filesToMinify to 0.
         if (filesToMinify === 0) {

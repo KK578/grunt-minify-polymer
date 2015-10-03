@@ -21,6 +21,15 @@ exports.minifyCss = function (css) {
     minCss = minCss.replace(/\/\*.*?\*\//g, '');
 
     /**
+     * Check after removing whitespace and comments, if any non white space characters remain.
+     * If none are found, the input contained no CSS to minify.
+     *
+     * */
+    if (!/\S/.test(minCss)) {
+        return '';
+    }
+
+    /**
      * Remove 'styling' spaces after the following characters: ;,>{}
      * Would be preferable to use lookahead/lookbehind to allow for matching all
      *  characters without including in the matched string, but JS.
@@ -49,7 +58,7 @@ exports.minifyCss = function (css) {
      *
      */
     // For each : within a css selector, remove surrounding white space.
-    var selectors = minCss.match(/.*?\{([^{}]*?\{.*?\}|.*?);?\}/g) || [];
+    var selectors = minCss.match(/.*?\{([^{}]*?\{.*?\}|.*?);?\}/g);
 
     for (var i = 0; i < selectors.length; i++) {
         var rules = selectors[i].match(/\{([^{}]*?\{.*?\}|.*?);?\}/g);
