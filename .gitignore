@@ -4,6 +4,7 @@
 *.sln
 *.suo
 .ntvs_analysis.dat
+.vs/
 obj/
 dist/
 
@@ -43,3 +44,5 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.swp
+
