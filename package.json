@@ -31,7 +31,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "minimize": "^1.8.1",
-    "uglify-js": "^2.6.2"
+    "uglify-js": "github:mishoo/UglifyJS2#harmony"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
