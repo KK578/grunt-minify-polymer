@@ -35,15 +35,13 @@ grunt.loadNpmTasks('grunt-minify-polymer');
 
 ### ES6 Support
 
-If you require support for minifying ES6, please target the ES6 build by installing as above, and appending `-es6` to the version in your `package.json`.
+If you require support for minifying ES6 JavaScript, please target the ES6 build by using the following command:
 
-```json
-...
-"dependencies": {
-  "grunt-minify-polymer": "vx.x.x-es6"
-},
-...
+```shell
+npm install grunt-minify-polymer@es6 --save-dev
 ```
+
+**Note: This installs uglify-js#harmony branch by targetting the git repo. This may require node>=v0.12/npm>=v2**
 
 ## The "minifyPolymer" task
 Minifies HTML with any inline CSS and JS.
